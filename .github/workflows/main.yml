@@ -1,0 +1,24 @@
+nama: Windows-CRD
+ 
+pada: 
+  alur kerja_pengiriman:
+    masukan:
+      kode otorisasi:
+        deskripsi: 'Masukkan kode CRD'
+        diperlukan: benar
+      kode pos:
+        deskripsi: 'Pin Enam Digit'
+        diperlukan: benar
+ 
+Pekerjaan:
+  membangun:
+    berjalan pada: windows-terbaru
+ 
+    tangga:
+    - penggunaan: tindakan/checkout@v2
+    - nama: Inisialisasi Pengaturan
+      jalankan: ./setup.ps1
+    - nama: Starting CRD
+      jalankan: ${{ github.event.inputs.authcode }} -pin=${{ github.event.inputs.pincode }}
+    - nama: Tetap Hidup
+      jalankan: ./timeout.ps1
